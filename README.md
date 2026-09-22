@@ -5,3 +5,4 @@
 * Sohini Sarmin
 * Vandita Venkatesh
 * Sweta Saha
+* Kartik Katyal
