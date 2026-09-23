@@ -1,0 +1,22 @@
+{
+  "scenarios": {
+    "low": {
+      "title": "LOW RISK",
+      "location": { "name": "Demo: New Town, Kolkata", "latitude": 22.5807, "longitude": 88.4596 },
+      "weather": { "temperature": 29, "rainfall": 1, "wind_speed": 10, "humidity": 62, "condition": "Light Rain" },
+      "flood_level": 0.1
+    },
+    "moderate": {
+      "title": "MODERATE RISK",
+      "location": { "name": "Demo: Kasba, Kolkata", "latitude": 22.5160, "longitude": 88.3860 },
+      "weather": { "temperature": 26, "rainfall": 5, "wind_speed": 30, "humidity": 84, "condition": "Moderate Rain" },
+      "flood_level": 0.4
+    },
+    "high": {
+      "title": "HIGH RISK",
+      "location": { "name": "Demo: Kidderpore, Kolkata", "latitude": 22.5370, "longitude": 88.3240 },
+      "weather": { "temperature": 24, "rainfall": 20, "wind_speed": 50, "humidity": 95, "condition": "Heavy Rain" },
+      "flood_level": 0.8
+    }
+  }
+}
