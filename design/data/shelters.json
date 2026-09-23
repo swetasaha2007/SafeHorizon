@@ -1,0 +1,12 @@
+{
+  "shelters": [
+    { "id": 1, "name": "Demo Emergency Shelter 1", "address": "Demo Address, Park Street area, Kolkata", "latitude": 22.5535, "longitude": 88.3520, "capacity": 500, "demo": true },
+    { "id": 2, "name": "Demo Emergency Shelter 2", "address": "Demo Address, Salt Lake area, Kolkata", "latitude": 22.5867, "longitude": 88.4171, "capacity": 600, "demo": true },
+    { "id": 3, "name": "Demo Emergency Shelter 3", "address": "Demo Address, Howrah area, Kolkata", "latitude": 22.5958, "longitude": 88.2636, "capacity": 450, "demo": true },
+    { "id": 4, "name": "Demo Emergency Shelter 4", "address": "Demo Address, Behala area, Kolkata", "latitude": 22.4986, "longitude": 88.3106, "capacity": 400, "demo": true },
+    { "id": 5, "name": "Demo Emergency Shelter 5", "address": "Demo Address, Jadavpur area, Kolkata", "latitude": 22.4990, "longitude": 88.3714, "capacity": 350, "demo": true },
+    { "id": 6, "name": "Demo Emergency Shelter 6", "address": "Demo Address, Dum Dum area, Kolkata", "latitude": 22.6300, "longitude": 88.4200, "capacity": 550, "demo": true },
+    { "id": 7, "name": "Demo Emergency Shelter 7", "address": "Demo Address, Garia area, Kolkata", "latitude": 22.4630, "longitude": 88.3940, "capacity": 300, "demo": true },
+    { "id": 8, "name": "Demo Emergency Shelter 8", "address": "Demo Address, Shyambazar area, Kolkata", "latitude": 22.6010, "longitude": 88.3730, "capacity": 250, "demo": true }
+  ]
+}
