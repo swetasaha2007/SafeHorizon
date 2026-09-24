@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flood Evacuation Route Planner</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 12c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2M2 18c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2M12 3l4 4h-3v3h-2V7H8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-rain" viewBox="0 0 24 24"><path d="M7 15a4.5 4.5 0 0 1-.4-9A6 6 0 0 1 18 7.5a3.8 3.8 0 0 1-.5 7.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-temp" viewBox="0 0 24 24"><path d="M10 14.5V5a2 2 0 1 1 4 0v9.5a4 4 0 1 1-4 0z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="17.5" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4.5 4.5 0 0 1-.4-9A6 6 0 0 1 18 10.5a3.8 3.8 0 0 1-.5 7.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 12l-2 3h3l-2 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-level" viewBox="0 0 24 24"><path d="M4 3v18M4 7h3M4 11h2M4 15h3M4 19h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10 14c1.5 0 1.5-1.2 3-1.2s1.5 1.2 3 1.2 1.5-1.2 3-1.2M10 18c1.5 0 1.5-1.2 3-1.2s1.5 1.2 3 1.2 1.5-1.2 3-1.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3L2 20h20z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 12.5l2.7 2.7L16 9.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-shelter" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 9.5V20h14V9.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M12 11v6M9 14h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="6" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 18h7a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="2.5 2.5"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z M9 4v14M15 6v14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="brand-mark"><svg><use href="#i-wave"/></svg></span>
+        <div>
+          <h1>Flood Evacuation Route Planner</h1>
+          <p class="subtitle">Risk awareness and evacuation assistance system</p>
+        </div>
+      </div>
+      <span class="prototype-tag">University prototype · Demo data</span>
+    </div>
+    <div class="hazard-stripe" aria-hidden="true"></div>
+  </header>
+
+  <main class="container">
+
+   
+    <div id="status" class="status status--idle" role="status" aria-live="polite">
+      <span class="status-icon" id="statusIcon"></span>
+      <span id="statusText">Showing demo data. Enter a location or use your current location.</span>
+    </div>
+
+   
+    <section class="grid grid-location">
+      <div class="card">
+        <h2 class="card-title"><svg class="ico"><use href="#i-search"/></svg>Enter your current location</h2>
+        <form id="locationForm" class="location-form" autocomplete="off">
+          <label for="locationInput" class="sr-only">Location</label>
+          <input id="locationInput" type="text" placeholder="e.g. Kolkata, Salt Lake" />
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary" id="analyzeBtn">
+              <svg class="ico"><use href="#i-search"/></svg>Analyze Location
+            </button>
+            <button type="button" class="btn btn-secondary" id="geoBtn">
+              <svg class="ico"><use href="#i-target"/></svg>Use My Location
+            </button>
+          </div>
+        </form>
+
+        
+        <div class="demo-switch">
+          <span>Demo mode:</span>
+          <button type="button" data-scenario="low">Low risk</button>
+          <button type="button" data-scenario="moderate">Moderate risk</button>
+          <button type="button" data-scenario="high">High risk</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title"><svg class="ico"><use href="#i-pin"/></svg>Location Information <span class="demo-badge demo-only" hidden>Demo Data</span></h2>
+        <dl class="loc-info">
+          <div><dt>Current Location</dt><dd id="locName">Kolkata</dd></div>
+          <div><dt>Latitude</dt><dd id="locLat">22.5726</dd></div>
+          <div><dt>Longitude</dt><dd id="locLng">88.3639</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    
+    <section class="grid grid-priority">
+
+      
+      <article id="riskCard" class="card risk-card" data-level="immediate" aria-labelledby="riskLevel">
+        <div class="risk-head">
+          <span class="section-label">Risk Awareness</span>
+          <span class="demo-badge">Prototype</span>
+        </div>
+
+        <div class="risk-main">
+          <div class="risk-icon"><svg><use href="#i-alert" id="riskIconUse"/></svg></div>
+          <div>
+            <p class="risk-level-label">Risk Level</p>
+            <p id="riskLevel" class="risk-level">EVACUATE IMMEDIATELY</p>
+          </div>
+        </div>
+
+        <div class="risk-score">
+          <div class="risk-score-row">
+            <span>Risk Score</span>
+            <strong><span id="riskScore">72</span> / 100</strong>
+          </div>
+          <div class="meter" aria-hidden="true"><div id="riskMeter" class="meter-fill" style="width:72%"></div></div>
+          <div class="meter-scale" aria-hidden="true"><span>SAFE</span><span>EVACUATE</span><span>IMMEDIATELY</span></div>
+        </div>
+
+        <div class="risk-action">
+          <p class="risk-action-label">Recommended Action</p>
+          <p id="riskAction" class="risk-action-text">Move to the nearest designated emergency shelter.</p>
+        </div>
+
+        <div class="risk-reasons">
+          <p class="risk-reasons-label">Why this risk level</p>
+          <ul id="riskReasons">
+            <li>Heavy rainfall</li>
+            <li>High wind speed</li>
+            <li>Elevated flood level</li>
+          </ul>
+        </div>
+
+        <p class="fine-print">Prototype rule-based score using demo flood data. Not an official flood warning.</p>
+      </article>
+
+      <div class="stack">
+        <!-- 6. SHELTER -->
+        <article class="card shelter-card">
+          <h2 class="card-title"><svg class="ico"><use href="#i-shelter"/></svg>Nearest Emergency Shelter <span class="demo-badge">Demo Data</span></h2>
+          <p id="shelterName" class="shelter-name">Community Emergency Shelter</p>
+          <p id="shelterAddress" class="shelter-address">Demo Address</p>
+          <div class="shelter-stats">
+            <div><span class="stat-label">Distance</span><span id="shelterDistance" class="stat-value">2.4 km</span></div>
+            <div><span class="stat-label">Capacity</span><span id="shelterCapacity" class="stat-value">500</span></div>
+          </div>
+        </article>
+
+        
+        <article class="card route-card">
+          <h2 class="card-title"><svg class="ico"><use href="#i-route"/></svg>Suggested Evacuation Route</h2>
+          <p class="route-meta">From <strong id="routeFrom">Kolkata</strong> to <strong id="routeTo">Community Emergency Shelter</strong></p>
+          <a id="routeBtn" class="btn btn-route is-disabled" href="#" target="_blank" rel="noopener" aria-disabled="true">
+            <svg class="ico"><use href="#i-route"/></svg>OPEN EVACUATION ROUTE<svg class="ico ico-sm"><use href="#i-external"/></svg>
+          </a>
+          <p id="routeNote" class="fine-print">Driving directions open in Google Maps. This is a suggested route and is not guaranteed to be flood-safe — avoid flooded roads and follow official instructions.</p>
+        </article>
+      </div>
+    </section>
+
+    
+    <section>
+      <h2 class="section-heading">Weather &amp; Environment <span class="scenario-note demo-only" hidden>· DEMO DATA: predefined location, weather and flood level</span></h2>
+      <div class="grid grid-weather">
+        <div class="card metric">
+          <span class="metric-icon"><svg><use href="#i-rain"/></svg></span>
+          <span class="metric-label">Rainfall</span>
+          <span class="metric-value" id="wxRain">52 mm</span>
+        </div>
+        <div class="card metric">
+          <span class="metric-icon"><svg><use href="#i-wind"/></svg></span>
+          <span class="metric-label">Wind Speed</span>
+          <span class="metric-value" id="wxWind">64 km/h</span>
+        </div>
+        <div class="card metric">
+          <span class="metric-icon"><svg><use href="#i-temp"/></svg></span>
+          <span class="metric-label">Temperature</span>
+          <span class="metric-value" id="wxTemp">27°C</span>
+        </div>
+        <div class="card metric">
+          <span class="metric-icon"><svg><use href="#i-drop"/></svg></span>
+          <span class="metric-label">Humidity</span>
+          <span class="metric-value" id="wxHumidity">85%</span>
+        </div>
+        <div class="card metric">
+          <span class="metric-icon"><svg><use href="#i-cloud"/></svg></span>
+          <span class="metric-label">Condition</span>
+          <span class="metric-value" id="wxCond">Heavy Rain</span>
+        </div>
+        <div class="card metric metric-flood">
+          <span class="metric-icon"><svg><use href="#i-level"/></svg></span>
+          <span class="metric-label">Demo Flood Level <span class="demo-badge">Demo Flood Data</span></span>
+          <span class="metric-value" id="wxFlood">1.2 m</span>
+        </div>
+      </div>
+    </section>
+
+   
+    <section class="grid grid-bottom">
+      
+      <article class="card map-card">
+        <h2 class="card-title"><svg class="ico"><use href="#i-map"/></svg>Route Overview</h2>
+        <div id="mapArea" class="map-placeholder" role="img" aria-label="Map placeholder showing your location and the nearest shelter">
+          <svg class="map-svg" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <path class="map-water" d="M-10 150 C 60 120, 110 190, 180 160 S 300 120, 420 170 L420 240 L-10 240 Z"/>
+            <path class="map-road" d="M0 60 H400 M120 0 V220 M280 0 V220 M0 120 L400 40"/>
+            <path class="map-route" d="M80 175 C 110 120, 120 95, 180 90 S 280 70, 320 55"/>
+          </svg>
+          <span class="map-pin map-pin--you" style="left:20%;top:79%"><svg><use href="#i-pin"/></svg><em>You</em></span>
+          <span class="map-pin map-pin--shelter" style="left:80%;top:25%"><svg><use href="#i-shelter"/></svg><em>Shelter</em></span>
+          <span class="map-note">Illustration · Use “Open Evacuation Route” for directions</span>
+        </div>
+      </article>
+
+     
+      <article class="card instructions-card">
+        <h2 class="card-title"><svg class="ico"><use href="#i-list"/></svg>Emergency Instructions</h2>
+        <ol class="instructions">
+          <li>Move to higher ground if flooding increases.</li>
+          <li>Avoid walking or driving through moving floodwater.</li>
+          <li>Follow official emergency instructions.</li>
+          <li>Carry essential medicines and important documents.</li>
+          <li>Avoid flooded roads.</li>
+        </ol>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      Design Thinking Laboratory · University working prototype. Not an official emergency-management system.
+      In a real emergency, contact local authorities (India: 112).
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
