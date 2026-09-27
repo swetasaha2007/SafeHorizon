@@ -16,7 +16,7 @@ FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 SHELTERS_FILE = os.path.join(BASE_DIR, "data", "shelters.json")
 DEMO_FILE = os.path.join(BASE_DIR, "data", "demo_scenarios.json")
 
-OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY", "your-api-key-here").strip()
+OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY", "44e196b38716de97704554b56890f956").strip()
 
 WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
 GEOCODE_URL = "https://api.openweathermap.org/geo/1.0/direct"
